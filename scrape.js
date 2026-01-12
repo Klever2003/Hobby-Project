@@ -65,16 +65,16 @@ const scrape = async () => {
       MoneyLineHome: odds[oddsStart + 5],
       };
       games.push(game);
-      console.log("Matchup: " + game.Visitor + " @ " + game.Home);
+      console.log(game.Visitor + " @ " + game.Home);
       console.log(game);
     };
     return games;
   };
 
-  organization();
-
   await browser.close();
+
+  const result = organization();
+  return result;
 };
 
-
-scrape();
+module.exports = scrape;
