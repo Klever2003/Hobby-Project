@@ -12,20 +12,50 @@ function App() {
       setOdds(res.data);
     });
   }, []);
+  
+  if (!odds) return <div>Loading...</div>; 
 
   return (
     <div className="App">
-      <button>MoneyLine Odds</button>
-      {odds && odds.map((game, index) => (
-        <div key = {index}>
-          <h3>{game.Visitor} @ {game.Home}</h3>
-          <p>MoneyLine: {game.MoneyLineVisitor} | {game.MoneyLineHome}</p>
-          <p>Spread: {game.SpreadVisitor.Line} | {game.SpreadHome.Line}</p>
-          <p>Spread Odds: {game.SpreadVisitor.Odds} | {game.SpreadHome.Odds}</p>
-          <p>Total Over: {game.TotalOver.Line} | Total Under: {game.TotalUnder.Line}</p>
-          <p>Total Over Odds: {game.TotalOver.Odds} | Total Under Odds: {game.TotalUnder.Odds}</p>
-          </div>
-      ))}
+
+      <table className="border-separate border border-gray-400 w-full h-screen">
+        <thead>
+          <tr>
+            <th className = "border border-gray-400" scope ="col" rowSpan ="2">Matchup</th>
+            <th className = "border border-gray-400" scope ="colgroup" colSpan ="3">Moneyline</th>
+            <th className = "border border-gray-400" scope ="colgroup" colSpan = "3">Spread</th>
+            <th className = "border border-gray-400" scope ="colgroup" colSpan = "3">Total</th>
+          </tr>
+          <tr>
+            <th className="border border-gray-400" scope ="col">DraftKings</th>
+            <th className="border border-gray-400" scope ="col">BetMGM</th>
+            <th className="border border-gray-400" scope ="col">FanDuel</th>
+            <th className="border border-gray-400" scope ="col">DraftKings</th>
+            <th className="border border-gray-400" scope ="col">BetMGM</th>
+            <th className="border border-gray-400" scope ="col">FanDuel</th>
+            <th className="border border-gray-400" scope ="col">DraftKings</th>
+            <th className="border border-gray-400" scope ="col">BetMGM</th>
+            <th className="border border-gray-400" scope ="col">FanDuel</th>
+          </tr>
+        </thead>
+        <tbody>
+          {odds.map((game, index) => (
+            <tr key={index}>
+              <td className = "border border-gray-400" >{game.matchup.visitor} @ <br></br> {game.matchup.home}</td>
+              <td className = "border border-gray-400">{game.odds.DraftKings.moneyline.Visitor} <br></br> {game.odds.DraftKings.moneyline.Home}</td>
+              <td className = "border border-gray-400">{game.odds.BetMGM.moneyline.Visitor} <br></br> {game.odds.BetMGM.moneyline.Home}</td>
+              <td className = "border border-gray-400">{game.odds.FanDuel.moneyline.Visitor} <br></br> {game.odds.FanDuel.moneyline.Home}</td>
+              <td className = "border border-gray-400">{game.odds.DraftKings.spread.visitor.Line} ({game.odds.DraftKings.spread.visitor.Odds}) <br></br> {game.odds.DraftKings.spread.home.Line} ({game.odds.DraftKings.spread.home.Odds})</td>
+              <td className = "border border-gray-400">{game.odds.BetMGM.spread.visitor.Line} {game.odds.BetMGM.spread.visitor.Odds} <br></br> {game.odds.BetMGM.spread.home.Line} {game.odds.BetMGM.spread.home.Odds}</td>
+              <td className = "border border-gray-400">{game.odds.FanDuel.spread.visitor.Line} ({game.odds.FanDuel.spread.visitor.Odds}) <br></br> {game.odds.FanDuel.spread.home.Line} ({game.odds.FanDuel.spread.home.Odds})</td>
+
+              <td className = "border border-gray-400">{game.odds.DraftKings.total.Totals} <br></br> ({game.odds.DraftKings.total.Odds})</td>
+              <td className = "border border-gray-400">{game.odds.BetMGM.total.Totals} <br></br> {game.odds.BetMGM.total.Odds}</td>
+              <td className = "border border-gray-400">{game.odds.FanDuel.total.Totals} <br></br> {game.odds.FanDuel.total.Odds}</td>
+            </tr> 
+          ))}
+        </tbody>
+      </table>
       </div>
   );
 }
